@@ -88,7 +88,7 @@ class WeatherViewModel(private val apiService: WeatherApiService, private val mo
         viewModelScope.launch {
             try {
                 val history = mongoDBHelper.getUserWeatherHistory(userId)
-                // You can add a new LiveData for history if needed
+                
             } catch (e: Exception) {
                 _error.postValue("Error fetching weather history: ${e.message}")
             }
@@ -97,7 +97,7 @@ class WeatherViewModel(private val apiService: WeatherApiService, private val mo
 
     override fun onCleared() {
         super.onCleared()
-        // MongoDBHelper is a singleton managed by Application, do not close it here
+        
     }
 
     private fun String.capitalize(): String {
