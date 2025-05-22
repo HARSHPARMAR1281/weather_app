@@ -51,32 +51,25 @@ class WeatherActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         try {
-            // Initialize MongoDB helper with context
             mongoDBHelper = MongoDBHelper(this)
 
-            // Set up toolbar
             setSupportActionBar(binding.toolbar)
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
             supportActionBar?.title = "Weather"
 
-            // Initialize location services
             fusedLocationClient = com.google.android.gms.location.LocationServices.getFusedLocationProviderClient(this)
             locationHelper = com.example.weather_app.utils.LocationHelper(this)
             
-            // Initialize WeatherViewModel with RetrofitClient and Application context
             val factory = WeatherViewModelFactory(RetrofitClient.apiService, application)
             weatherViewModel = ViewModelProvider(this, factory)[WeatherViewModel::class.java]
 
-            // Set up click listeners for search and location
             setupClickListeners()
 
-            // Set up refresh button
             binding.refreshButton.setOnClickListener {
-                isManualSearchActive = false // Reset manual search flag
-                checkLocationPermission() // Re-check permission and fetch location weather
+                isManualSearchActive = false 
+                checkLocationPermission()
             }
-
-            // Observe weather data
+            
             weatherViewModel.weatherData.observe(this) { weatherData ->
                 weatherData?.let { updateWeatherUI(it) }
             }
@@ -84,7 +77,6 @@ class WeatherActivity : AppCompatActivity() {
                 errorMsg?.let { showError(it) }
             }
 
-            // Check location permission and start fetching weather
             checkLocationPermission()
 
         } catch (e: Exception) {
@@ -99,11 +91,11 @@ class WeatherActivity : AppCompatActivity() {
             if (actionId == android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH) {
                 val cityName = binding.etSearch.text.toString()
                 if (cityName.isNotEmpty()) {
-                    isManualSearchActive = true // Set manual search flag
+                    isManualSearchActive = true 
                     fetchWeatherByCity(cityName)
                 } else {
-                    isManualSearchActive = false // Reset manual search if search is cleared
-                    checkLocationPermission() // Resume location-based weather
+                    isManualSearchActive = false 
+                    checkLocationPermission() 
                 }
                 true
             } else {
@@ -112,20 +104,18 @@ class WeatherActivity : AppCompatActivity() {
         }
 
         binding.btnLocation.setOnClickListener {
-            isManualSearchActive = false // Reset manual search flag
-            checkLocationPermission() // Re-check permission and fetch location weather
+            isManualSearchActive = false 
+            checkLocationPermission() 
         }
     }
 
     private fun checkLocationPermission() {
         lifecycleScope.launch {
             if (locationHelper.hasLocationPermission()) {
-                // Try to get last known location first
                 val lastLocation = locationHelper.getLastLocation()
                 if (lastLocation != null) {
                     fetchWeatherByLocation(lastLocation.latitude, lastLocation.longitude)
                 }
-                // Start continuous location updates
                 startLocationUpdates()
             } else {
                 requestLocationPermission()
@@ -149,7 +139,7 @@ class WeatherActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == Constants.LOCATION_PERMISSION_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                checkLocationPermission() // Check permissions and start location logic again
+                checkLocationPermission()
             } else {
                 Toast.makeText(this, "Location permission required for weather updates", Toast.LENGTH_LONG).show()
             }
@@ -157,13 +147,10 @@ class WeatherActivity : AppCompatActivity() {
     }
 
     private fun startLocationUpdates() {
-        // Stop any previous location updates
-        // (This is handled by collectLatest, which cancels the previous collection when a new one starts)
 
         lifecycleScope.launch {
             locationHelper.getLocationUpdates()
                 .collectLatest { location ->
-                    // Fetch weather for the new location only if manual search is not active
                     if (!isManualSearchActive) {
                         fetchWeatherByLocation(location.latitude, location.longitude)
                     }
@@ -174,39 +161,30 @@ class WeatherActivity : AppCompatActivity() {
     private fun fetchWeatherByLocation(latitude: Double, longitude: Double) {
         showLoading(true)
         weatherViewModel.fetchWeatherByLocation(latitude, longitude)
-        // showLoading(false) // This might hide loading too quickly, consider moving inside observe
     }
 
     private fun fetchWeatherByCity(cityName: String) {
         showLoading(true)
         weatherViewModel.getWeatherByCity(cityName)
-        // showLoading(false) // This might hide loading too quickly, consider moving inside observe
     }
 
     private fun updateWeatherUI(weatherData: WeatherData) {
         try {
-            // Update location
             binding.locationTextView.text = "${weatherData.cityName}, ${weatherData.country}"
 
-            // Update temperature and description
             binding.temperatureTextView.text = getString(R.string.temperature_format, weatherData.temperature.toInt())
             binding.weatherDescriptionTextView.text = weatherData.description
 
-            // Update weather details
             binding.humidityTextView.text = getString(R.string.humidity_format, weatherData.humidity)
             binding.windSpeedTextView.text = getString(R.string.wind_speed_format, weatherData.windSpeed)
             binding.feelsLikeTextView.text = getString(R.string.temperature_format, weatherData.feelsLike.toInt())
 
-            // Save weather data to MongoDB (Realm)
             saveWeatherDataToMongoDB(weatherData)
 
-            // Update background based on weather condition
             updateBackground(weatherData.weatherId)
 
-            // Update weather animation
             setWeatherAnimation(weatherData.weatherId)
 
-            // Hide loading and error
             binding.progressBar.visibility = View.GONE
             binding.errorTextView.visibility = View.GONE
         } catch (e: Exception) {
