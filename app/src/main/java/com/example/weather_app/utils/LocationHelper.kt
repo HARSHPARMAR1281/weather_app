@@ -83,7 +83,7 @@ class LocationHelper(private val context: Context) {
                 Looper.getMainLooper()
             )
         } catch (e: SecurityException) {
-            close(e) // Close the flow with the security exception
+            close(e) 
             return@callbackFlow
         }
 
@@ -100,26 +100,17 @@ class LocationHelper(private val context: Context) {
                     ).addOnSuccessListener { location ->
                         continuation.resume(location)
                     }.addOnFailureListener { e ->
-                        // Log the failure reason if needed, e.e., Log.e("LocationHelper", "getCurrentLocation failed", e)
-                        continuation.resume(null) // Resume with null on failure
+                        continuation.resume(null) 
                     }
                 } else {
-                    // Location services are disabled
-                    // Optionally, you could launch an intent to open location settings here
-                    // val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-                    // context.startActivity(intent)
                     continuation.resume(null)
                 }
             } else {
-                // Permission not granted
                 continuation.resume(null)
             }
         } catch (e: SecurityException) {
-            // Handle SecurityException (e.g., permission revoked during the call)
             continuation.resume(null)
         } catch (e: Exception) {
-            // Catch any other unexpected exceptions
-            // Log.e("LocationHelper", "Unexpected error in getCurrentLocation", e)
             continuation.resume(null)
         }
     }
