@@ -21,7 +21,6 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun navigateToNextScreen() {
-        // TODO: Check if user is logged in
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
         finish()
