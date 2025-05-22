@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Brand Colors -->
+    <color name="primary">#64B5F6</color>
+    <color name="primary_dark">#42A5F5</color>
+    <color name="accent">#FF80AB</color>
+    <color name="accent_dark">#FF4081</color>
+
+    <!-- Common Colors -->
+    <color name="white">#121212</color>
+    <color name="black">#FFFFFF</color>
+    <color name="gray">#BDBDBD</color>
+    <color name="light_gray">#424242</color>
+
+    <!-- Text Colors -->
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#B3FFFFFF</color>
+    <color name="text_hint">#80FFFFFF</color>
+
+    <!-- Card Colors -->
+    <color name="card_background">#1FFFFFFF</color>
+    <color name="card_stroke">#33FFFFFF</color>
+
+    <!-- Weather Colors -->
+    <color name="weather_sunny">#FFD54F</color>
+    <color name="weather_cloudy">#B0BEC5</color>
+    <color name="weather_rainy">#81D4FA</color>
+    <color name="weather_snowy">#B3E5FC</color>
+
+    <!-- Weather Gradient Colors -->
+    <!-- Sunny -->
+    <color name="sunny_gradient_start">#FFD54F</color>
+    <color name="sunny_gradient_end">#FFC107</color>
+    
+    <!-- Cloudy -->
+    <color name="cloudy_gradient_start">#546E7A</color>
+    <color name="cloudy_gradient_end">#455A64</color>
+    
+    <!-- Rainy -->
+    <color name="rainy_gradient_start">#1976D2</color>
+    <color name="rainy_gradient_end">#0D47A1</color>
+    
+    <!-- Snowy -->
+    <color name="snowy_gradient_start">#64B5F6</color>
+    <color name="snowy_gradient_end">#42A5F5</color>
+    
+    <!-- Foggy -->
+    <color name="foggy_gradient_start">#78909C</color>
+    <color name="foggy_gradient_end">#546E7A</color>
+    
+    <!-- Drizzle -->
+    <color name="drizzle_gradient_start">#4FC3F7</color>
+    <color name="drizzle_gradient_end">#29B6F6</color>
+    
+    <!-- Thunderstorm -->
+    <color name="thunderstorm_gradient_start">#263238</color>
+    <color name="thunderstorm_gradient_end">#1A237E</color>
+    
+    <!-- Night -->
+    <color name="gradient_night_start">#0D47A1</color>
+    <color name="gradient_night_end">#1A237E</color>
+</resources> 

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Weather App</string>
+    
+    <!-- Weather Format Strings -->
+    <string name="temperature_format">%d°C</string>
+    <string name="humidity_format">%d%%</string>
+    <string name="wind_speed_format">%.1f m/s</string>
+    <string name="pressure_format">%d hPa</string>
+    
+    <!-- Weather Messages -->
+    <string name="error_location_services">Please enable location services to get weather updates</string>
+    <string name="error_location_permission">Location permission is required to get weather updates</string>
+    <string name="error_weather_fetch">Unable to fetch weather data. Please try again.</string>
+    <string name="error_location_fetch">Unable to get your location. Please try again.</string>
+    
+    <!-- Action Bar -->
+    <string name="action_refresh">Refresh</string>
+    <string name="action_logout">Logout</string>
+</resources>
