@@ -18,7 +18,7 @@ class WeatherData(
     var description: String = "",
     var weatherId: Int = 0,
     var timestamp: Long = Clock.System.now().toEpochMilliseconds(),
-    var userId: String = "" // To associate weather data with Firebase user
+    var userId: String = ""
 ) : RealmObject {
-    constructor() : this(null) // Required no-arg constructor for Realm 
+    constructor() : this(null) 
 } 
