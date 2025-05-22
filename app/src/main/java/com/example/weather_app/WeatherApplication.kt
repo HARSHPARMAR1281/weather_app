@@ -11,8 +11,7 @@ class WeatherApplication : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
-        // Initialize any app-wide configurations here
-        // Initialize MongoDB helper with application context
+        
         mongoDBHelper = MongoDBHelper(applicationContext)
     }
 } 
